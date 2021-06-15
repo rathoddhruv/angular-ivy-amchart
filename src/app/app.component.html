@@ -1,4 +1,7 @@
-<hello name="{{ name }}"></hello>
-<p>
-  Start editing to see some magic happen :)
-</p>
+<div>
+  <span class="last-style">Last:</span>
+  <button class="last-style-values" (click)="recentRange(365)">1Y</button>
+  <button class="last-style-values" (click)="recentRange(7)">7D</button>
+</div>
+
+<div id="chartdiv_1" style="height:500px" #chartDiv1></div>
