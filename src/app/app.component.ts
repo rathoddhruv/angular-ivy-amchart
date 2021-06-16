@@ -186,6 +186,10 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')} " + +'';
       consumptionSeries.columns.template.width = am4core.percent(100);
       consumptionSeries.clustered = false;
+      consumptionSeries.hiddenInLegend = true;
+      consumptionSeries.hidden = true;
+      consumptionSeries.hide();
+      consumptionSeries.hide(0);
 
       consumptionSeries2.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
