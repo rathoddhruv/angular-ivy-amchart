@@ -34,7 +34,8 @@ import {
   isBefore,
   addMonths
 } from 'date-fns';
-import { data } from './intervalData/denver';
+// import { data } from './intervalData/denver';
+import { data } from './intervalData/chicago-hour';
 useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
@@ -113,7 +114,7 @@ export class AppComponent implements OnInit {
       dateAxis.renderer.grid.template.disabled = true;
       dateAxis.renderer.fullWidthTooltip = true;
 
-      dateAxis.baseInterval = { timeUnit: 'day', count: 1 };
+      dateAxis.baseInterval = { timeUnit: 'hour', count: 1 };
 
       consumptionAxis.title.text = 'consumption';
       consumptionAxis.title.fill = am4core.color('#0A7696');
@@ -178,7 +179,7 @@ export class AppComponent implements OnInit {
       consumptionSeries.tooltip.label.fontWeight = 'bold';
       consumptionSeries.tooltip.background.fill = am4core.color('#ffffff');
       consumptionSeries.tooltip.label.fill = am4core.color('#000000');
-      consumptionSeries.id = 'consumption1';
+      consumptionSeries.id = 'consumption';
       consumptionSeries.tooltip.background.strokeWidth = 0;
       consumptionSeries.tooltip.getFillFromObject = false;
       consumptionSeries.columns.template.tooltipText =
@@ -195,7 +196,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.columns.template.propertyFields.strokeDasharray =
         'dashLength';
       consumptionSeries2.groupFields.valueY = 'sum';
-      consumptionSeries2.name = 'Consumption2';
+      consumptionSeries2.name = 'consumption1';
       consumptionSeries2.columns.template.fillOpacity = 1;
       consumptionSeries2.columns.template.fill = am4core.color('#59C2EC');
       consumptionSeries2.stroke = am4core.color('#59C2EC');
@@ -203,7 +204,7 @@ export class AppComponent implements OnInit {
       consumptionSeries2.tooltip.label.fontWeight = 'bold';
       consumptionSeries2.tooltip.background.fill = am4core.color('#ffffff');
       consumptionSeries2.tooltip.label.fill = am4core.color('#000000');
-      consumptionSeries2.id = 'consumption2';
+      consumptionSeries2.id = 'consumption1';
       consumptionSeries2.tooltip.background.strokeWidth = 0;
       consumptionSeries2.tooltip.getFillFromObject = false;
       consumptionSeries2.columns.template.tooltipText =
@@ -229,7 +230,7 @@ export class AppComponent implements OnInit {
       demandSeries.connect = false;
       demandSeries.tooltip.background.fill = am4core.color('#ffffff');
       demandSeries.tooltip.label.fill = am4core.color('#000000');
-      demandSeries.id = 'demand1';
+      demandSeries.id = 'demand';
       demandSeries.tooltip.background.strokeWidth = 2;
       demandSeries.tooltip.getFillFromObject = false;
       demandSeries.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
@@ -237,10 +238,10 @@ export class AppComponent implements OnInit {
       demandSeries.tensionX = 0.77;
 
       demandSeries2.sequencedInterpolation = true;
-      demandSeries2.dataFields.valueY = 'demand2';
+      demandSeries2.dataFields.valueY = 'demand1';
       demandSeries2.dataFields.dateX = 'time';
       demandSeries2.yAxis = demandAxis;
-      demandSeries2.name = 'Demand2';
+      demandSeries2.name = 'demand1';
       demandSeries2.stroke = am4core.color('red');
       demandSeries2.propertyFields.strokeDasharray = 'dashLength';
       demandSeries2.strokeWidth = 2;
@@ -250,7 +251,7 @@ export class AppComponent implements OnInit {
       demandSeries2.connect = false;
       demandSeries2.tooltip.background.fill = am4core.color('#ffffff');
       demandSeries2.tooltip.label.fill = am4core.color('#000000');
-      demandSeries2.id = 'demand2';
+      demandSeries2.id = 'demand1';
       demandSeries2.tooltip.background.strokeWidth = 2;
       demandSeries2.tooltip.getFillFromObject = false;
       demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
@@ -365,14 +366,14 @@ export class AppComponent implements OnInit {
         0,
         true
       );
-      chart.map.getKey('demand1').data = data;
-      chart.map.getKey('consumption1').data = data;
+      chart.map.getKey('demand').data = data;
+      chart.map.getKey('consumption').data = data;
       // chart.map.getKey("weather1").data = data[0];
 
       // this.chart.data = this.generateChartData(0);
       // setTimeout(() => {
-      //   chart.map.getKey("consumption2").data = data[1];
-      //   chart.map.getKey("demand2").data = data[1];
+      //   chart.map.getKey("consumption1").data = data[1];
+      //   chart.map.getKey("demand1").data = data[1];
       //   chart.map.getKey("weather2").data = data[1];
       // }, 2000);
       //(this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
@@ -418,14 +419,25 @@ export class AppComponent implements OnInit {
       //     });
       chart.events.on('ready', () => {
         (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-          new Date('2020-10-01'),
-          new Date('2020-12-01'),
+          new Date('2020-11-01'),
+          new Date('2020-11-07'),
           true,
           true,
           true
         );
       });
+
       this.chart = chart;
+      this.chart.map.getKey('consumption').hide(0);
+      this.chart.map.getKey('demand').show();
+      this.chart.map.getKey('demand').fillOpacity = 0.5;
+      this.chart.map.getKey('demand').fill = am4core.color('#fc4e60');
+      this.chart.map.getKey('demand').bulletsContainer.hide();
+      this.chart.map.getKey('demand').cursorTooltipEnabled = true;
+
+      (this.chart.map.getKey(
+        'consumptionAxis'
+      ) as am4charts.ValueAxis).cursorTooltipEnabled = true;
     });
   }
 
@@ -522,8 +534,8 @@ export class AppComponent implements OnInit {
     //     true
     //   );
     // }
-    // this.chart.map.getKey("demand1").data = data[0];
-    // this.chart.map.getKey("consumption1").data = data[0];
+    // this.chart.map.getKey("demand").data = data[0];
+    // this.chart.map.getKey("consumption").data = data[0];
     // this.chart.map.getKey("weather1").data = data[0];
   }
 
