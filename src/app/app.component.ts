@@ -425,6 +425,7 @@ export class AppComponent implements OnInit {
           true
         );
       });
+      
       this.chart = chart;
     });
   }
