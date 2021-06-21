@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
       dateAxis.id = 'dateAxis';
       dateAxis.renderer.grid.template.location = 0;
       // dateAxis.renderer.grid.template.location = 0.5;
-      dateAxis.renderer.labels.template.location = 0;
+      dateAxis.renderer.labels.template.location = 0.00001;
       dateAxis.renderer.minGridDistance = 100;
       dateAxis.renderer.cellStartLocation = 0.2;
       dateAxis.renderer.cellEndLocation = 0.8;
