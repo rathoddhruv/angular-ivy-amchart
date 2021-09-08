@@ -35,7 +35,8 @@ import {
   addMonths
 } from 'date-fns';
 // import { data } from './intervalData/denver';
-import { data } from './intervalData/chicago-hour';
+// import { data } from './intervalData/chicago-hour';
+import { data } from './intervalData/compare';
 useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
@@ -423,8 +424,8 @@ export class AppComponent implements OnInit {
       //     });
       chart.events.on('ready', () => {
         (chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
-          new Date('2020-11-01'),
-          new Date('2020-11-07'),
+          new Date('2021-07-01'),
+          new Date('2021-07-07'),
           true,
           true,
           true
