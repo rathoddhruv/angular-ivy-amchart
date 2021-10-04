@@ -35,6 +35,7 @@ import {
   addMonths,
 } from 'date-fns';
 import { data } from './intervalData/denver';
+import { compareData } from './intervalData/compare';
 useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
@@ -42,6 +43,7 @@ useTheme(am4themes_animated);
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+isCompare = false;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private zone: NgZone,
@@ -183,7 +185,7 @@ export class AppComponent implements OnInit {
       consumptionSeries.columns.template.tooltipText =
         "{valueY.formatNumber('#,###.')} " + +'';
       consumptionSeries.columns.template.width = am4core.percent(100);
-      consumptionSeries.clustered = false;
+      consumptionSeries.clustered = this.isCompare;
 
       consumptionSeries2.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
@@ -210,8 +212,8 @@ export class AppComponent implements OnInit {
       consumptionSeries2.columns.template.width = am4core.percent(100);
       consumptionState.properties.fillOpacity = 0.9;
       consumptionSeries2.hiddenInLegend = true;
-      consumptionSeries2.clustered = false;
-      consumptionSeries2.hide();
+      consumptionSeries2.clustered = this.isCompare;
+      // consumptionSeries2.hide();
 
       demandSeries.sequencedInterpolation = true;
       demandSeries.dataFields.valueY = 'demand';
@@ -366,6 +368,7 @@ export class AppComponent implements OnInit {
       );
       chart.map.getKey('demand1').data = data;
       chart.map.getKey('consumption1').data = data;
+      chart.map.getKey('consumption2').data = compareData;
       // chart.map.getKey("weather").data = data;
       // chart.map.getKey("weather").data = data;
 
