@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
       consumptionAxis.title.fill = am4core.color('#0A7696');
       consumptionAxis.renderer.labels.template.fill = am4core.color('#0A7696');
       consumptionAxis.strictMinMax = false;
-      // consumptionAxis.min = 0;
+      consumptionAxis.min = 0;
       consumptionAxis.renderer.grid.template.disabled = true;
       consumptionAxis.renderer.opposite = false;
       consumptionAxis.renderer.labels.template.fontWeight = 'bold';
