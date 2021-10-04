@@ -43,7 +43,7 @@ useTheme(am4themes_animated);
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-isCompare = false;
+  isCompare = false;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private zone: NgZone,
@@ -67,16 +67,16 @@ isCompare = false;
     let demandSeries = chart.series.push(new am4charts.LineSeries());
     let weatherSeries = chart.series.push(new am4charts.LineSeries());
 
-    let consumptionSeries2 = chart.series.push(new am4charts.ColumnSeries());
-    let demandSeries2 = chart.series.push(new am4charts.LineSeries());
-    let weatherSeries2 = chart.series.push(new am4charts.LineSeries());
+    let consumptionSeries1 = chart.series.push(new am4charts.ColumnSeries());
+    let demandSeries1 = chart.series.push(new am4charts.LineSeries());
+    let weatherSeries1 = chart.series.push(new am4charts.LineSeries());
 
     consumptionSeries.zIndex = 10;
-    consumptionSeries2.zIndex = 10;
+    consumptionSeries1.zIndex = 10;
     demandSeries.zIndex = 20;
-    demandSeries2.zIndex = 20;
+    demandSeries1.zIndex = 20;
     weatherSeries.zIndex = 20;
-    weatherSeries2.zIndex = 20;
+    weatherSeries1.zIndex = 20;
 
     dateAxis.min = addYears(startOfYear(new Date()), -2).getTime();
     dateAxis.max = endOfYear(endOfYear(new Date())).getTime();
@@ -151,13 +151,13 @@ isCompare = false;
       let consumptionState =
         consumptionSeries.columns.template.states.create('hover');
       demandSeries.bullets.push(new am4charts.CircleBullet());
-      let demandBullet2 = demandSeries2.bullets.push(
+      let demandBullet2 = demandSeries1.bullets.push(
         new am4charts.CircleBullet()
       );
       let weatherBullet = weatherSeries.bullets.push(
         new am4charts.CircleBullet()
       );
-      let weatherBullet2 = weatherSeries2.bullets.push(
+      let weatherBullet2 = weatherSeries1.bullets.push(
         new am4charts.CircleBullet()
       );
 
@@ -179,7 +179,7 @@ isCompare = false;
       consumptionSeries.tooltip.label.fontWeight = 'bold';
       consumptionSeries.tooltip.background.fill = am4core.color('#ffffff');
       consumptionSeries.tooltip.label.fill = am4core.color('#000000');
-      consumptionSeries.id = 'consumption1';
+      consumptionSeries.id = 'consumption';
       consumptionSeries.tooltip.background.strokeWidth = 0;
       consumptionSeries.tooltip.getFillFromObject = false;
       consumptionSeries.columns.template.tooltipText =
@@ -187,33 +187,33 @@ isCompare = false;
       consumptionSeries.columns.template.width = am4core.percent(100);
       consumptionSeries.clustered = this.isCompare;
 
-      consumptionSeries2.columns.template.cursorOverStyle =
+      consumptionSeries1.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
-      consumptionSeries2.sequencedInterpolation = false;
-      consumptionSeries2.dataFields.valueY = 'value2';
-      consumptionSeries2.dataFields.dateX = 'time';
-      consumptionSeries2.yAxis = consumptionAxis;
-      consumptionSeries2.columns.template.propertyFields.strokeDasharray =
+      consumptionSeries1.sequencedInterpolation = false;
+      consumptionSeries1.dataFields.valueY = 'value2';
+      consumptionSeries1.dataFields.dateX = 'time';
+      consumptionSeries1.yAxis = consumptionAxis;
+      consumptionSeries1.columns.template.propertyFields.strokeDasharray =
         'dashLength';
-      consumptionSeries2.groupFields.valueY = 'sum';
-      consumptionSeries2.name = 'Consumption2';
-      consumptionSeries2.columns.template.fillOpacity = 1;
-      consumptionSeries2.columns.template.fill = am4core.color('#59C2EC');
-      consumptionSeries2.stroke = am4core.color('#59C2EC');
-      consumptionSeries2.tooltip.background.stroke = am4core.color('#59C2EC');
-      consumptionSeries2.tooltip.label.fontWeight = 'bold';
-      consumptionSeries2.tooltip.background.fill = am4core.color('#ffffff');
-      consumptionSeries2.tooltip.label.fill = am4core.color('#000000');
-      consumptionSeries2.id = 'consumption2';
-      consumptionSeries2.tooltip.background.strokeWidth = 0;
-      consumptionSeries2.tooltip.getFillFromObject = false;
-      consumptionSeries2.columns.template.tooltipText =
+      consumptionSeries1.groupFields.valueY = 'sum';
+      consumptionSeries1.name = 'consumption1';
+      consumptionSeries1.columns.template.fillOpacity = 1;
+      consumptionSeries1.columns.template.fill = am4core.color('#59C2EC');
+      consumptionSeries1.stroke = am4core.color('#59C2EC');
+      consumptionSeries1.tooltip.background.stroke = am4core.color('#59C2EC');
+      consumptionSeries1.tooltip.label.fontWeight = 'bold';
+      consumptionSeries1.tooltip.background.fill = am4core.color('#ffffff');
+      consumptionSeries1.tooltip.label.fill = am4core.color('#000000');
+      consumptionSeries1.id = 'consumption1';
+      consumptionSeries1.tooltip.background.strokeWidth = 0;
+      consumptionSeries1.tooltip.getFillFromObject = false;
+      consumptionSeries1.columns.template.tooltipText =
         "{valueY.formatNumber('#,###.')} " + +'';
-      consumptionSeries2.columns.template.width = am4core.percent(100);
+      consumptionSeries1.columns.template.width = am4core.percent(100);
       consumptionState.properties.fillOpacity = 0.9;
-      consumptionSeries2.hiddenInLegend = true;
-      consumptionSeries2.clustered = this.isCompare;
-      // consumptionSeries2.hide();
+      consumptionSeries1.hiddenInLegend = true;
+      consumptionSeries1.clustered = this.isCompare;
+      // consumptionSeries1.hide();
 
       demandSeries.sequencedInterpolation = true;
       demandSeries.dataFields.valueY = 'demand';
@@ -230,36 +230,36 @@ isCompare = false;
       demandSeries.connect = false;
       demandSeries.tooltip.background.fill = am4core.color('#ffffff');
       demandSeries.tooltip.label.fill = am4core.color('#000000');
-      demandSeries.id = 'demand1';
+      demandSeries.id = 'demand';
       demandSeries.tooltip.background.strokeWidth = 2;
       demandSeries.tooltip.getFillFromObject = false;
       demandSeries.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
       demandSeries.groupFields.valueY = 'high';
       demandSeries.tensionX = 0.77;
 
-      demandSeries2.sequencedInterpolation = true;
-      demandSeries2.dataFields.valueY = 'demand2';
-      demandSeries2.dataFields.dateX = 'time';
-      demandSeries2.yAxis = demandAxis;
-      demandSeries2.name = 'Demand2';
-      demandSeries2.stroke = am4core.color('red');
-      demandSeries2.propertyFields.strokeDasharray = 'dashLength';
-      demandSeries2.strokeWidth = 2;
-      demandSeries2.stroke = am4core.color('#D90368');
-      demandSeries2.tooltip.background.stroke = am4core.color('#D90368');
-      demandSeries2.tooltip.label.fontWeight = 'bold';
-      demandSeries2.connect = false;
-      demandSeries2.tooltip.background.fill = am4core.color('#ffffff');
-      demandSeries2.tooltip.label.fill = am4core.color('#000000');
-      demandSeries2.id = 'demand2';
-      demandSeries2.tooltip.background.strokeWidth = 2;
-      demandSeries2.tooltip.getFillFromObject = false;
-      demandSeries2.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
-      demandSeries2.tensionX = 0.77;
-      demandSeries2.strokeDasharray = '8,4';
-      demandSeries2.hiddenInLegend = true;
-      demandSeries2.hide(0);
-      // demandSeries2.hiddenInLegend = true;
+      demandSeries1.sequencedInterpolation = true;
+      demandSeries1.dataFields.valueY = 'demand1';
+      demandSeries1.dataFields.dateX = 'time';
+      demandSeries1.yAxis = demandAxis;
+      demandSeries1.name = 'demand1';
+      demandSeries1.stroke = am4core.color('red');
+      demandSeries1.propertyFields.strokeDasharray = 'dashLength';
+      demandSeries1.strokeWidth = 2;
+      demandSeries1.stroke = am4core.color('#D90368');
+      demandSeries1.tooltip.background.stroke = am4core.color('#D90368');
+      demandSeries1.tooltip.label.fontWeight = 'bold';
+      demandSeries1.connect = false;
+      demandSeries1.tooltip.background.fill = am4core.color('#ffffff');
+      demandSeries1.tooltip.label.fill = am4core.color('#000000');
+      demandSeries1.id = 'demand1';
+      demandSeries1.tooltip.background.strokeWidth = 2;
+      demandSeries1.tooltip.getFillFromObject = false;
+      demandSeries1.tooltipText = "{valueY.formatNumber('#,###.')} " + +'';
+      demandSeries1.tensionX = 0.77;
+      demandSeries1.strokeDasharray = '8,4';
+      demandSeries1.hiddenInLegend = true;
+      demandSeries1.hide(0);
+      // demandSeries1.hiddenInLegend = true;
 
       //////////////////////////////////////////////
       demandBullet2.fill = am4core.color('red');
@@ -288,29 +288,29 @@ isCompare = false;
         "{valueY.formatNumber('#,###.')}" + '° F' + '';
       weatherSeries.groupFields.valueY = 'average';
 
-      // weatherSeries2 = chart.series.values[2] as am4charts.LineSeries;
-      weatherBullet2 = weatherSeries2.bullets
+      // weatherSeries1 = chart.series.values[2] as am4charts.LineSeries;
+      weatherBullet2 = weatherSeries1.bullets
         .values[0] as am4charts.CircleBullet;
       weatherBullet2.fill = am4core.color('#FFB822');
       //////////////////////////////////////////////
-      weatherSeries2.sequencedInterpolation = true;
-      weatherSeries2.dataFields.valueY = 'temperature2';
-      weatherSeries2.dataFields.dateX = 'time';
-      weatherSeries2.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
-      weatherSeries2.name = 'Avg Temp2';
-      weatherSeries2.strokeWidth = 2;
-      weatherSeries2.id = 'weather2';
-      weatherSeries2.tooltip.label.fontWeight = 'bold';
-      weatherSeries2.stroke = am4core.color('#ffbb28');
-      weatherSeries2.propertyFields.strokeDasharray = 'dashLength';
-      weatherSeries2.tooltip.background.stroke = am4core.color('#ffbb28');
-      weatherSeries2.tooltip.background.fill = am4core.color('#ffffff');
-      weatherSeries2.tooltip.label.fill = am4core.color('#000000');
-      weatherSeries2.tooltip.background.strokeWidth = 2;
-      weatherSeries2.tooltip.getFillFromObject = false;
-      weatherSeries2.tooltipText =
+      weatherSeries1.sequencedInterpolation = true;
+      weatherSeries1.dataFields.valueY = 'temperature2';
+      weatherSeries1.dataFields.dateX = 'time';
+      weatherSeries1.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
+      weatherSeries1.name = 'Avg Temp2';
+      weatherSeries1.strokeWidth = 2;
+      weatherSeries1.id = 'weather1';
+      weatherSeries1.tooltip.label.fontWeight = 'bold';
+      weatherSeries1.stroke = am4core.color('#ffbb28');
+      weatherSeries1.propertyFields.strokeDasharray = 'dashLength';
+      weatherSeries1.tooltip.background.stroke = am4core.color('#ffbb28');
+      weatherSeries1.tooltip.background.fill = am4core.color('#ffffff');
+      weatherSeries1.tooltip.label.fill = am4core.color('#000000');
+      weatherSeries1.tooltip.background.strokeWidth = 2;
+      weatherSeries1.tooltip.getFillFromObject = false;
+      weatherSeries1.tooltipText =
         "{valueY.formatNumber('#,###.')}" + '° F' + '';
-      weatherSeries2.groupFields.valueY = 'average';
+      weatherSeries1.groupFields.valueY = 'average';
 
       am4core.getInteraction().body.events.on('keydown', (ev) => {
         console.log('keyboard keydown');
@@ -366,17 +366,17 @@ isCompare = false;
         0,
         true
       );
-      chart.map.getKey('demand1').data = data;
-      chart.map.getKey('consumption1').data = data;
-      chart.map.getKey('consumption2').data = compareData;
+      chart.map.getKey('demand').data = data;
+      chart.map.getKey('consumption').data = data;
+      chart.map.getKey('consumption1').data = compareData;
       // chart.map.getKey("weather").data = data;
       // chart.map.getKey("weather").data = data;
 
       // this.chart.data = this.generateChartData(0);
       // setTimeout(() => {
-      //   chart.map.getKey("consumption2").data = data[1];
-      //   chart.map.getKey("demand2").data = data[1];
-      //   chart.map.getKey("weather2").data = data[1];
+      //   chart.map.getKey("consumption1").data = data[1];
+      //   chart.map.getKey("demand1").data = data[1];
+      //   chart.map.getKey("weather1").data = data[1];
       // }, 2000);
       //(this.chart.xAxes.getIndex(0) as am4charts.DateAxis).zoomToDates(
       //   startOfDay(new Date()),
@@ -526,8 +526,8 @@ isCompare = false;
     //     true
     //   );
     // }
-    // this.chart.map.getKey("demand1").data = data[0];
-    // this.chart.map.getKey("consumption1").data = data[0];
+    // this.chart.map.getKey("demand").data = data[0];
+    // this.chart.map.getKey("consumption").data = data[0];
     // this.chart.map.getKey("weather").data = data[0];
   }
 
