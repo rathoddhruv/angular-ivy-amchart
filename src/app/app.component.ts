@@ -4,7 +4,7 @@ import {
   XYCursor,
   XYChart,
   LineSeries,
-  DateAxis
+  DateAxis,
 } from '@amcharts/amcharts4/charts';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import * as am4core from '@amcharts/amcharts4/core';
@@ -19,7 +19,7 @@ import {
   ViewChild,
   HostListener,
   ViewEncapsulation,
-  ElementRef
+  ElementRef,
 } from '@angular/core';
 import { MouseCursorStyle } from '@amcharts/amcharts4/core';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
@@ -32,14 +32,14 @@ import {
   startOfYear,
   endOfYear,
   isBefore,
-  addMonths
+  addMonths,
 } from 'date-fns';
 import { data } from './intervalData/denver';
 useTheme(am4themes_animated);
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
   constructor(
@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
       consumptionAxis.title.fill = am4core.color('#0A7696');
       consumptionAxis.renderer.labels.template.fill = am4core.color('#0A7696');
       consumptionAxis.strictMinMax = false;
-      // consumptionAxis.min = 0;
+      consumptionAxis.min = 0;
       consumptionAxis.renderer.grid.template.disabled = true;
       consumptionAxis.renderer.opposite = false;
       consumptionAxis.renderer.labels.template.fontWeight = 'bold';
@@ -146,9 +146,8 @@ export class AppComponent implements OnInit {
       demandAxis.strictMinMax = false;
       demandAxis.min = 0;
       demandAxis.title.rotation = 270;
-      let consumptionState = consumptionSeries.columns.template.states.create(
-        'hover'
-      );
+      let consumptionState =
+        consumptionSeries.columns.template.states.create('hover');
       demandSeries.bullets.push(new am4charts.CircleBullet());
       let demandBullet2 = demandSeries2.bullets.push(
         new am4charts.CircleBullet()
@@ -257,7 +256,7 @@ export class AppComponent implements OnInit {
       demandSeries2.tensionX = 0.77;
       demandSeries2.strokeDasharray = '8,4';
       demandSeries2.hiddenInLegend = true;
-      demandSeries2.hide();
+      demandSeries2.hide(0);
       // demandSeries2.hiddenInLegend = true;
 
       //////////////////////////////////////////////
@@ -269,12 +268,12 @@ export class AppComponent implements OnInit {
       weatherBullet.fill = am4core.color('#FFB822');
       //////////////////////////////////////////////
       weatherSeries.sequencedInterpolation = true;
-      weatherSeries.dataFields.valueY = 'temperature';
+      weatherSeries.dataFields.valueY = 'value';
       weatherSeries.dataFields.dateX = 'time';
       weatherSeries.yAxis = chart.yAxes.values[2] as am4charts.ValueAxis;
       weatherSeries.name = 'Avg Temp';
       weatherSeries.strokeWidth = 2;
-      weatherSeries.id = 'weather1';
+      weatherSeries.id = 'weather';
       weatherSeries.tooltip.label.fontWeight = 'bold';
       weatherSeries.stroke = am4core.color('#ffbb28');
       weatherSeries.propertyFields.strokeDasharray = 'dashLength';
@@ -311,7 +310,7 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')}" + '° F' + '';
       weatherSeries2.groupFields.valueY = 'average';
 
-      am4core.getInteraction().body.events.on('keydown', ev => {
+      am4core.getInteraction().body.events.on('keydown', (ev) => {
         console.log('keyboard keydown');
         // consumptionSeries.columns.template.cursorOverStyle = MouseCursorStyle.default;
         // chart.cursorOverStyle = am4core.MouseCursorStyle.default;
@@ -339,7 +338,7 @@ export class AppComponent implements OnInit {
         chart.cursor.behavior = 'panX';
       });
 
-      am4core.getInteraction().body.events.on('keyup', ev => {
+      am4core.getInteraction().body.events.on('keyup', (ev) => {
         console.log('keyboard keyup key press');
         if (am4core.keyboard.isKey(ev.event, 'shift')) {
           chart.cursor.behavior = 'panX';
@@ -352,7 +351,7 @@ export class AppComponent implements OnInit {
         // chart.cursorOverStyle = am4core.MouseCursorStyle.default;
       });
 
-      am4core.getInteraction().body.events.on('DOWN', ev => {
+      am4core.getInteraction().body.events.on('DOWN', (ev) => {
         console.log('keyboard key DOWN');
         this.chartDiv1.nativeElement.style = `cursor: url("data:image/svg+xml,%3Csvg width='13px' height='13px' viewBox='0 0 13 13' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3Eato/graph cursor%3C/title%3E%3Cg id='ato/graph-cursor' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cpath d='M7,-5.24025268e-14 L7,5.999 L13,6 L13,7 L7,6.999 L7,13 L6,13 L6,6.999 L0,7 L0,6 L6,5.999 L6,-5.24025268e-14 L7,-5.24025268e-14 Z' id='Combined-Shape' fill='%23000000' fill-rule='nonzero'%3E%3C/path%3E%3C/g%3E%3C/svg%3E"), pointer !important`;
 
@@ -367,7 +366,8 @@ export class AppComponent implements OnInit {
       );
       chart.map.getKey('demand1').data = data;
       chart.map.getKey('consumption1').data = data;
-      // chart.map.getKey("weather1").data = data[0];
+      // chart.map.getKey("weather").data = data;
+      // chart.map.getKey("weather").data = data;
 
       // this.chart.data = this.generateChartData(0);
       // setTimeout(() => {
@@ -381,7 +381,7 @@ export class AppComponent implements OnInit {
       //   true,
       //   true
       // );
-      consumptionSeries.columns.template.events.on('hit', ev => {
+      consumptionSeries.columns.template.events.on('hit', (ev) => {
         console.log(ev.target.dataItem);
 
         // item.controls['fromDate'].setValue(ev.target.dataItem.dates.dateX, { emitEvent: false });
@@ -463,7 +463,7 @@ export class AppComponent implements OnInit {
         time: newDate.toUTCString(),
         value: value,
         demand: demand,
-        temperature: temperature
+        temperature: temperature,
       });
     }
 
@@ -525,7 +525,7 @@ export class AppComponent implements OnInit {
     // }
     // this.chart.map.getKey("demand1").data = data[0];
     // this.chart.map.getKey("consumption1").data = data[0];
-    // this.chart.map.getKey("weather1").data = data[0];
+    // this.chart.map.getKey("weather").data = data[0];
   }
 
   ngOnDestroy() {
