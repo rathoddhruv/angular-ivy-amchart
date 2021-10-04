@@ -43,7 +43,7 @@ useTheme(am4themes_animated);
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  isCompare = false;
+  isCompare = true;
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
     private zone: NgZone,
@@ -190,7 +190,7 @@ export class AppComponent implements OnInit {
       consumptionSeries1.columns.template.cursorOverStyle =
         MouseCursorStyle.pointer;
       consumptionSeries1.sequencedInterpolation = false;
-      consumptionSeries1.dataFields.valueY = 'value2';
+      consumptionSeries1.dataFields.valueY = 'value';
       consumptionSeries1.dataFields.dateX = 'time';
       consumptionSeries1.yAxis = consumptionAxis;
       consumptionSeries1.columns.template.propertyFields.strokeDasharray =
@@ -211,7 +211,7 @@ export class AppComponent implements OnInit {
         "{valueY.formatNumber('#,###.')} " + +'';
       consumptionSeries1.columns.template.width = am4core.percent(100);
       consumptionState.properties.fillOpacity = 0.9;
-      consumptionSeries1.hiddenInLegend = true;
+      consumptionSeries1.hiddenInLegend = !this.isCompare;
       consumptionSeries1.clustered = this.isCompare;
       // consumptionSeries1.hide();
 
@@ -427,10 +427,18 @@ export class AppComponent implements OnInit {
           true,
           true
         );
+        setTimeout(() => {
+          this.hideCompareSeriesAndLegend();
+        }, 3000);
       });
 
       this.chart = chart;
     });
+  }
+  hideCompareSeriesAndLegend() {
+    this.isCompare = false;
+    this.chart.map.getKey('consumption1').data = [];
+    this.chart.map.getKey('consumption1').hiddenInLegend = true;
   }
 
   generateChartData(start: Date, end: Date, interval, isWeather) {
